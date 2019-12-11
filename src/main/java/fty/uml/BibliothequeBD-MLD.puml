@@ -1,0 +1,100 @@
+@startuml
+class Genre {
+id : PK
+Libellé : humour, fantasy...
+}
+
+class Serie {
+Id : PK
+Id_utilisateurs : EK
+Id_collections : EK
+Libellé
+Id_genre : EK
+Id_origine : EK
+Id_langue : FR, EN...
+Statut : en cours, finie
+Site Internet
+Lien Illustration
+}
+
+class Origine {
+Id : PK
+Libellé : Europe, Japon...1
+}
+
+class Langue {
+Id : PK
+Code langue
+Libellé langue
+}
+
+Class Album {
+Id : PK
+Id_utilisateurs : EK
+Id_collections : EK
+Id_Series : EK
+Titre
+NumeroTome
+DepôtLégal
+Id_Editeurs
+Code ISBN
+Nombre De Planches
+Top Favori
+Code PEGI
+Lien Couverture
+Lien Dernière Page
+}
+
+class Utilisateur {
+Id : PK
+Login
+Email
+}
+
+class Collection {
+Id : PK
+Id_utilisateur : EK
+Libellé
+}
+
+class Auteur {
+id : PK
+Nom
+Prénom
+Surnom
+Date de naissance
+Date de décès
+Biographie
+Site Internet
+Lien Photo
+}
+
+class Editeur{
+Id : PK
+Libellé
+}
+
+class AlbumAuteurs {
+Id_Albums : EK
+Id_Auteurs : EK
+Rôle : dessin, scénario...
+}
+
+class Evaluation{
+Note
+Commentaire
+}
+
+
+Bibliotheque - Utilisateur : Possède
+Album"0..*" -o "0"Bibliotheque : contient
+Serie"1" -- "1.."Album : est composée de
+Genre"1" -- "0.."Serie : a pour genre
+Origine"1" - "0.."Serie : a pour origine
+Serie"1.." - "1"Langue : est écrite en
+Auteur"1.." o- "1"Album : est écrit par
+(Album, Auteur) .. AlbumAuteurs
+Album"1.." -- "1"Editeur : est édité par
+Album"1" -- "0.."Evaluation : possède
+Evaluation -- Utilisateur
+@enduml

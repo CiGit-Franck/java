@@ -1,0 +1,31 @@
+@startuml
+Client  -- Commande
+Commande - Produit
+(Commande, Produit) .. Ligne
+
+Vendeur -- Client
+
+Produit -- Stock
+(Stock, Produit) .. Case
+
+class Client {
+}
+
+class Produit {
+}
+
+class Vendeur {
+}
+
+class Stock {
+}
+
+class Commande {
+}
+
+class Ligne {
+}
+
+class Case {
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+Bibliotheque - Utilisateur : Possède
+Album -o Bibliotheque : contient 
+Serie -- Album : est composée de 
+Auteur o- Album : est écrit par 
+(Album, Auteur) .. AlbumAuteurs
+Album -- Editeur : est édité par
+Album -- AlbumPhysique : possède
+Album -- Commentaire : possède
+@enduml
