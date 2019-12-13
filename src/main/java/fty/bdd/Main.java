@@ -2,10 +2,12 @@ package fty.bdd;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 public class Main {
 
@@ -70,6 +72,11 @@ public class Main {
 //    public static Monument createMonument() {
 //
 //    }
+    public static List<City> findAll(int first, int size) {
+        return entityManagerFactory.createEntityManager().createNamedQuery("City.findAll", City.class)
+                .setFirstResult(first).setMaxResults(size).getResultList();
+    }
+
     public static void main(String[] args) throws IOException {
         for (String envName : env.keySet()) {
             if (envName.contains("DB_USER")) {
@@ -87,16 +94,23 @@ public class Main {
         System.out.println(createCity());
         System.out.println(updateCity());
         //
-        City paris = new City("Paris",99,45);
+        City paris = new City("Paris", 99, 45);
         Monument tourEiffel = new Monument("Tour Eiffel");
         User user = new User("Franck THERY");
-        EntityManager em=entityManagerFactory.createEntityManager();
+        EntityManager em = entityManagerFactory.createEntityManager();
         cityDAO = new CityDAO(em);
         monumentDAO = new MonumentDAO(em);
         userDAO = new UserDAO(em);
-        tourEiffel.setCity((City)cityDAO.create(paris));
-        tourEiffel.getUsers().add((User)userDAO.create(user));
-        System.out.println("Creation d'un monument "+monumentDAO.create(tourEiffel));
+        tourEiffel.setCity((City) cityDAO.create(paris));
+        tourEiffel.getUsers().add((User) userDAO.create(user));
+        System.out.println("Creation d'un monument " + monumentDAO.create(tourEiffel));
+        // Acces en utilisant directement leur type
+        TypedQuery<City> query = em.createQuery("SELECT c FROM City AS c WHERE c.name=:nameParam", City.class);
+        query.setParameter("nameParam", "Paris");
+        for (City c : query.getResultList()) {
+            System.out.println(c);
+        }
         //
+        System.out.println(findAll(0,23));
     }
 }

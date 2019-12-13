@@ -5,17 +5,16 @@
  */
 package fty.bdd;
 
-import fty.briefs.fitness.Set;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.SEQUENCE;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,6 +24,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "City")
+@NamedQueries(
+            {
+                @NamedQuery(name = "City.findAll", query = " SELECT c FROM City c ORDER BY c.name "),
+                @NamedQuery(name = "City.deleteById", query = " DELETE FROM City c WHERE c.id = :id")
+            })
 public class City implements Serializable {
 
     private Long id;
