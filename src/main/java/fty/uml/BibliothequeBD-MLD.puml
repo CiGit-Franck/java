@@ -81,10 +81,17 @@ Rôle : dessin, scénario...
 }
 
 class Evaluation{
+Id_Albums : EK
+Id_Utilisateur : EX
 Note
 Commentaire
 }
 
+class Pret{
+Id_Albums : EK
+Id_Utilisateur : EX
+Date 
+}
 
 Bibliotheque - Utilisateur : Possède
 Album"0..*" -o "0"Bibliotheque : contient
@@ -97,4 +104,6 @@ Auteur"1.." o- "1"Album : est écrit par
 Album"1.." -- "1"Editeur : est édité par
 Album"1" -- "0.."Evaluation : possède
 Evaluation -- Utilisateur
+Album"1" -- "1"Pret
+Pret"1" -- "1"Utilisateur 
 @enduml
